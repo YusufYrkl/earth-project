@@ -19,6 +19,23 @@ document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
+// Solar System
+const solarSystem = new THREE.Object3D();
+scene.add(solarSystem);
+
+// Sun Texture
+const sunTexture = new THREE.TextureLoader().load("public/sun.jpg");
+
+// Sun
+const sunGeometry = new THREE.SphereGeometry(2, 64, 64);
+const sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });
+const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+solarSystem.add(sun);
+
+// Sun Light
+const sunLight = new THREE.PointLight(0xffffff, 200, 200);
+sun.add(sunLight);
+
 // Animation
 function animate() {
   requestAnimationFrame(animate);
