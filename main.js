@@ -36,12 +36,37 @@ solarSystem.add(sun);
 const sunLight = new THREE.PointLight(0xffffff, 200, 200);
 sun.add(sunLight);
 
-// Animation
+// Earth Orbit
+const earthOrbit = new THREE.Object3D();
+solarSystem.add(earthOrbit);
+
+// Globe (Earth)
+const globeTexture = new THREE.TextureLoader().load(
+  "public/2k_earth_daymap.jpg"
+);
+const globe = new THREE.Mesh(
+  new THREE.SphereGeometry(1, 64, 64),
+  new THREE.MeshStandardMaterial({ map: globeTexture })
+);
+earthOrbit.add(globe);
+
+// Set Earth's position in its orbit
+globe.position.set(10, 0, 0);
+
+// Rotation logic
 function animate() {
   requestAnimationFrame(animate);
+
+  // Rotate Earth around its axis
+  globe.rotation.y += 0.001;
+
+  // Rotate Earth orbit around the sun
+  earthOrbit.rotation.y += 0.0005;
+
   controls.update();
   renderer.render(scene, camera);
 }
+
 animate();
 
 // Handle window resize
